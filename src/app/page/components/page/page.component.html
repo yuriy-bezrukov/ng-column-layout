@@ -1,0 +1,12 @@
+<p>page works!</p>
+
+<button (click)="prev()">prev</button>
+<button (click)="next()">next</button>
+<button (click)="step(0)">step0</button>
+<button (click)="step(1)">step1</button>
+<button (click)="step(2)">step2</button>
+<button (click)="step(3)">step3</button>
+<button (click)="step(4)">step4</button>
+
+<column-layout [action]="layoutAction" [options]="options" (state)="layoutChange($event)"></column-layout>
+

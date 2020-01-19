@@ -1,0 +1,8 @@
+<div 
+    class="element" 
+    *ngFor="let item of options; index as index" 
+    [ngStyle]="{'transform': 'translateX(' + positionsByX[index] + 'px)'}"
+    [ngClass]="{'element-hidden': !isView(index)}"
+>
+    <ng-template #dynamic></ng-template>
+</div>

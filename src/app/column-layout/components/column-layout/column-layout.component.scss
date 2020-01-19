@@ -1,0 +1,17 @@
+:host {
+    position: relative;
+    display: block;
+}
+
+.element {
+    position: absolute;
+    top: 0;
+    left: 0;
+    transition: 2s all linear;
+    transition-delay: opacity 1s;
+
+    &-hidden {
+        transition-delay: opacity 0;
+        opacity: 0;
+    }
+}
