@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { ColumnLayoutModule } from '../column-layout.module';
 import { ILayoutOptions, ILayoutWidgetRef } from '../components/column-layout/column-layout.component';
 import { BaseStoreService, IBaseStore } from './base-strore.service';
+import { Route, Router } from '@angular/router';
 
 export enum ColumnLayoutAction {
   next = 'next',
@@ -25,7 +26,7 @@ export interface IColumnLayoutState extends IBaseStore {
 })
 export class ColumnLayoutService extends BaseStoreService<IColumnLayoutState>{
 
-  constructor() {
+  constructor(private router: Router) {
     super();
   }
 
@@ -42,6 +43,9 @@ export class ColumnLayoutService extends BaseStoreService<IColumnLayoutState>{
         positionsByX: []
       }
     }
+    setTimeout(() => {
+      this.setStep(currentDisplay[0]);
+    });
   }
 
   private canNext() {

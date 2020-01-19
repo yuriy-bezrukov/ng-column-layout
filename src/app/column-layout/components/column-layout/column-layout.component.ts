@@ -13,12 +13,15 @@ import {
 } from '@angular/core';
 import { Subscription, Observable } from 'rxjs';
 import { ColumnLayoutService, IColumnLayoutState } from '../../services/column-layout.service';
+import { Router, ActivatedRoute } from '@angular/router';
 
+export const UrlName = 'block';
 
 export interface ILayoutOptions {
   component;
   positionByX?: number;
-  index?: number
+  index?: number;
+  nameUrl: string;
 }
 
 export interface ILayoutWidget {
@@ -36,7 +39,8 @@ export type ColumnLayoutParentAction = 'prev' | 'next' | number;
   selector: 'column-layout',
   templateUrl: './column-layout.component.html',
   styleUrls: ['./column-layout.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  providers: [ColumnLayoutService]
 })
 export class ColumnLayoutComponent implements OnInit {
 
@@ -49,7 +53,7 @@ export class ColumnLayoutComponent implements OnInit {
   private components: ILayoutWidgetRef[] = [];
   private subscriptions = new Subscription();
   positionsByX: number[] = [];
-
+  private startUrlRouteParam: string;
 
   @ViewChildren('dynamic', { read: ViewContainerRef }) private slotTargets: QueryList<ViewContainerRef>;
   elements: ViewContainerRef[];
@@ -57,10 +61,13 @@ export class ColumnLayoutComponent implements OnInit {
   constructor(
     private resolver: ComponentFactoryResolver,
     private cdr: ChangeDetectorRef,
-    private columnLayoutService: ColumnLayoutService
+    private columnLayoutService: ColumnLayoutService,
+    private router: Router,
+    private route: ActivatedRoute
   ) { }
 
   ngOnInit() {
+    this.startUrlRouteParam = this.route.snapshot.queryParams[UrlName];
     this.positionsByX = this.options.map(x => 0);
     this.action.subscribe(action => {
       if (action === 'next') this.columnLayoutService.next();
@@ -78,11 +85,15 @@ export class ColumnLayoutComponent implements OnInit {
         this.components.push(cmpRef);
       }
     });
-    this.columnLayoutService.init(this.options, this.components, [0]);
+    debugger
+    let blockToViewFromUrl = this.options.findIndex(option => option.nameUrl === this.startUrlRouteParam);
+    let blockToView = blockToViewFromUrl > 0 ? blockToViewFromUrl : 0;
+    this.columnLayoutService.init(this.options, this.components, [blockToView]);
 
     this.columnLayoutService.state$.subscribe(data => {
       this.positionsByX = data.payload.positionsByX;
       this.currentDisplay = data.payload.currentDisplay;
+      this.setRouter(data.payload.options[data.payload.currentDisplay[0]].nameUrl);
       this.state.emit(data);
       this.cdr.detectChanges();
     });
@@ -103,4 +114,10 @@ export class ColumnLayoutComponent implements OnInit {
     return this.currentDisplay.includes(index);
   }
 
+
+  setRouter(currentUrl: string) {
+    let queryParams = {};
+    queryParams[UrlName] = currentUrl;
+    this.router.navigate([''], { queryParams: queryParams, queryParamsHandling: 'merge' });
+  }
 }

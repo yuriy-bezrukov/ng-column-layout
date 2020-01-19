@@ -22,11 +22,11 @@ export class PageComponent implements OnInit {
   layoutAction = new EventEmitter<ColumnLayoutParentAction>()
 
   options: ILayoutOptions[] = [
-    { component: MainViewComponent },
-    { component: SecondPanelComponent },
-    { component: ThirdPanelComponent },
-    { component: FourthSidebarComponent },
-    { component: FifthPanelComponent }
+    { component: MainViewComponent, nameUrl: 'main' },
+    { component: SecondPanelComponent, nameUrl: 'second' },
+    { component: ThirdPanelComponent, nameUrl: 'thrid' },
+    { component: FourthSidebarComponent, nameUrl: 'fourth' },
+    { component: FifthPanelComponent, nameUrl: 'fifth' }
   ]
 
   next() {
