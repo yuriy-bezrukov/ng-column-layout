@@ -85,7 +85,6 @@ export class ColumnLayoutComponent implements OnInit {
         this.components.push(cmpRef);
       }
     });
-    debugger
     let blockToViewFromUrl = this.options.findIndex(option => option.nameUrl === this.startUrlRouteParam);
     let blockToView = blockToViewFromUrl > 0 ? blockToViewFromUrl : 0;
     this.columnLayoutService.init(this.options, this.components, [blockToView]);

@@ -12,12 +12,7 @@ import { IColumnLayoutState } from 'src/app/column-layout/services/column-layout
   templateUrl: './page.component.html',
   styleUrls: ['./page.component.scss']
 })
-export class PageComponent implements OnInit {
-
-  constructor() { }
-
-  ngOnInit() {
-  }
+export class PageComponent {
 
   layoutAction = new EventEmitter<ColumnLayoutParentAction>()
 
@@ -42,4 +37,45 @@ export class PageComponent implements OnInit {
   layoutChange(state: IColumnLayoutState) {
     // console.warn('Page Layout: ', state);
   }
+
+  next1() {
+    this.layoutActionHalf.emit('next')
+  }
+  prev1() {
+    this.layoutActionHalf.emit('prev')
+  }
+  step1(step: number) {
+    this.layoutActionHalf.emit(step)
+  }
+
+
+  layoutActionHalf = new EventEmitter<ColumnLayoutParentAction>()
+
+  optionsHalf: ILayoutOptions[] = [
+    {
+      component: MainViewComponent,
+      nameUrl: 'main'
+    },
+    {
+      component: SecondPanelComponent,
+      nameUrl: 'second',
+    },
+    {
+      component: ThirdPanelComponent,
+      nameUrl: 'thrid'
+    },
+    {
+      component: FourthSidebarComponent,
+      nameUrl: 'fourth'
+    },
+    {
+      component: FifthPanelComponent,
+      nameUrl: 'fifth'
+    }
+  ]
+
+  layoutChangeHalf(state: IColumnLayoutState) {
+    // console.warn('Page Layout: ', state);
+  }
+
 }

@@ -1,12 +1,24 @@
-<p>page works!</p>
+<div class="full-pages">
+    <button (click)="prev()">prev</button>
+    <button (click)="next()">next</button>
+    <button (click)="step(0)">main</button>
+    <button (click)="step(1)">step 2</button>
+    <button (click)="step(2)">step 3</button>
+    <button (click)="step(3)">step 4</button>
+    <button (click)="step(4)">step 5</button>
+    
+    <column-layout [action]="layoutAction" [options]="options" (state)="layoutChange($event)"></column-layout>
+</div>
 
-<button (click)="prev()">prev</button>
-<button (click)="next()">next</button>
-<button (click)="step(0)">main</button>
-<button (click)="step(1)">step 2</button>
-<button (click)="step(2)">step 3</button>
-<button (click)="step(3)">step 4</button>
-<button (click)="step(4)">step 5</button>
 
-<column-layout [action]="layoutAction" [options]="options" (state)="layoutChange($event)"></column-layout>
-
+<div class="half-pages">
+    <button (click)="prev1()">prev</button>
+    <button (click)="next1()">next</button>
+    <button (click)="step1(0)">main</button>
+    <button (click)="step1(1)">step 2</button>
+    <button (click)="step1(2)">step 3</button>
+    <button (click)="step1(3)">step 4</button>
+    <button (click)="step1(4)">step 5</button>
+    
+    <column-layout [action]="layoutActionHalf" [options]="optionsHalf" (state)="layoutChangeHalf($event)"></column-layout>
+</div>

@@ -1,10 +1,10 @@
 :host {
     position: relative;
-    display: block;
+    display: flex;
+    flex-direction: row;
 }
 
 .element {
-    position: absolute;
     top: 0;
     left: 0;
     transition: .5s all linear;

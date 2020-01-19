@@ -21,14 +21,8 @@ export interface IColumnLayoutState extends IBaseStore {
   }
 }
 
-@Injectable({
-  providedIn: ColumnLayoutModule
-})
+@Injectable()
 export class ColumnLayoutService extends BaseStoreService<IColumnLayoutState>{
-
-  constructor(private router: Router) {
-    super();
-  }
 
   init(options: ILayoutOptions[], elementRefs: ILayoutWidgetRef[], currentDisplay: number[]) {
     if (!currentDisplay.length) {
@@ -101,9 +95,14 @@ export class ColumnLayoutService extends BaseStoreService<IColumnLayoutState>{
   }
 
   positionRelativeCurrent(elementIndex: number, currentDisplay: number[]): number {
+    debugger
     let position = 0;
     let elementRefs = this.stateValue.payload.elementRefs;
-
+   
+    for(let i = 0; i < elementIndex; i++){
+      position -= elementRefs[i].instance._getWidth();
+    }
+    
     if (currentDisplay.includes(elementIndex)) {
       currentDisplay.filter(item => item < elementIndex).forEach(item => {
         position += elementRefs[item].instance._getWidth();
